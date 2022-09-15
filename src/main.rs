@@ -3,7 +3,7 @@ use std::net::SocketAddr;
 use axum::{
     extract::{Path, State},
     http::{uri::Uri, Request, Response},
-    routing::any,
+    routing::{any, get},
     Router,
 };
 use hyper::{client::HttpConnector, Body};
@@ -14,7 +14,9 @@ type Client = hyper::client::Client<HttpConnector, Body>;
 async fn main() {
     let client = Client::new();
 
-    let app = Router::with_state(client).route("/api/:service/*path", any(handler));
+    let app = Router::with_state(client)
+        .route("/helthz", get(healthz))
+        .route("/api/:service/*path", any(handler));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("reverse proxy listening on {}", addr);
@@ -24,6 +26,8 @@ async fn main() {
         .await
         .unwrap();
 }
+
+async fn healthz() {}
 
 async fn handler(
     State(client): State<Client>,
