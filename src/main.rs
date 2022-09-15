@@ -48,7 +48,7 @@ async fn handler(
 
     println!("path_query: {}", path_query);
 
-    let uri = format!("http://{}:{}{}", service, port, path_query);
+    let uri = format!("http://{}:{}/{}", service, port, path_query);
 
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 
