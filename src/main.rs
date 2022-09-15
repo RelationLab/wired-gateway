@@ -15,10 +15,10 @@ async fn main() {
     let client = Client::new();
 
     let app = Router::with_state(client)
-        .route("/helthz", get(healthz))
+        .route("/healthz", get(healthz))
         .route("/api/:service/*path", any(handler));
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let addr = SocketAddr::from(([0,0,0,0], 80));
     println!("reverse proxy listening on {}", addr);
 
     axum::Server::bind(&addr)
