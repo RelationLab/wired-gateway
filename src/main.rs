@@ -39,7 +39,7 @@ async fn healthz() {}
 
 async fn option_handler() -> Response<Body> {
     let mut builder = Response::builder().status(200);
-    let mut headers_mut = builder.headers_mut().unwrap();
+    let headers_mut = builder.headers_mut().unwrap();
     headers_mut.insert("access-control-allow-origin", HeaderValue::from_static("*"));
     headers_mut.insert(
         "access-control-allow-credentials",
