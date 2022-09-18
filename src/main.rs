@@ -18,7 +18,12 @@ async fn main() {
         .route("/healthz", get(healthz))
         .route(
             "/api/:service/*path",
-            get(handler).post(handler).options(option_handler),
+            get(handler)
+                .put(handler)
+                .patch(handler)
+                .post(handler)
+                .delete(handler)
+                .options(option_handler),
         );
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 80));
