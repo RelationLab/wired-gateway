@@ -37,7 +37,9 @@ async fn main() {
 
 async fn healthz() {}
 
-async fn option_handler() -> Response<Body> {
+async fn option_handler(req: Request<Body>) -> Response<Body> {
+    println!("options uri: {}", req.uri());
+
     let mut builder = Response::builder().status(200);
     let headers_mut = builder.headers_mut().unwrap();
     headers_mut.insert("access-control-allow-origin", HeaderValue::from_static("*"));
